@@ -146,6 +146,15 @@ static int ScreenshotWithFormat(lua_State* L, ScreenshotFormat format)
 		y = luaL_checkint(L, 2);
 		w = luaL_checkint(L, 3);
 		h = luaL_checkint(L, 4);
+
+		if (x < 0) {
+			unsigned int midx = w / 2;
+			x = midx + x;
+		}
+		if (y < 0) {
+			unsigned int midy = h / 2;
+			y = midy + y;
+		}
 	}
 	else
 	{
