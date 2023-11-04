@@ -168,16 +168,16 @@ static int ScreenshotWithFormat(lua_State* L, ScreenshotFormat format)
 		w = luaL_checkint(L, 3);
 		h = luaL_checkint(L, 4);
 
-		if (x < 0) {
+		if (x > 9000) {
 			unsigned int midx = viewport[2] / 2;
-			x = midx + x;
+			x = midx - (x - 9000);
 		}
-		if (y < 0) {
+		if (y > 9000) {
 			unsigned int midy = viewport[3] / 2;
-			y = midy + y;
+			y = midy - (y - 9000);
 		}
 		printf("screenshot: x=%d y=%d w=%d h=%d viewport width=%d height=%d\n", x, y, w, h,
-			viewport[2], viewport[3]);
+		viewport[2], viewport[3]);
 	}
 	else
 	{
