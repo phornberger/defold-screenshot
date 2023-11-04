@@ -157,6 +157,9 @@ static int ScreenshotWithFormat(lua_State* L, ScreenshotFormat format)
 {
 	int top = lua_gettop(L);
 
+	GLint viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	
 	unsigned int x, y, w, h;
 	if (top >= 4)
 	{
@@ -164,11 +167,18 @@ static int ScreenshotWithFormat(lua_State* L, ScreenshotFormat format)
 		y = luaL_checkint(L, 2);
 		w = luaL_checkint(L, 3);
 		h = luaL_checkint(L, 4);
+
+		if (x < 0) {
+			unsigned int midx = viewport[2] / 2;
+			x = midx + x;
+		}
+		if (y < 0) {
+			unsigned int midy = viewport[3] / 2;
+			y = midy + y;
+		}
 	}
 	else
 	{
-		GLint viewport[4];
-		glGetIntegerv(GL_VIEWPORT, viewport);
 		x = viewport[0];
 		y = viewport[1];
 		w = viewport[2];
