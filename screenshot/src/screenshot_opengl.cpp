@@ -162,8 +162,12 @@ static int ScreenshotWithFormat(lua_State* L, ScreenshotFormat format)
 			unsigned int midy = h / 2;
 			y = midy - (y - 9000);
 		}
-		printf("screenshot: x=%d y=%d w=%d h=%d viewport width=%d height=%d\n", x, y, w, h,
-		viewport[2], viewport[3]);
+		if (w == 0) {
+			w = viewport[2];
+		}
+		if (h == 0) {
+			h = viewport[3];
+		}
 	}
 	else
 	{
