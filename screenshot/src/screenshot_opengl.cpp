@@ -138,8 +138,8 @@ static int ScreenshotWithFormat(lua_State* L, ScreenshotFormat format)
 {
 	int top = lua_gettop(L);
 
-	int32_t x, y;
-	uint32_t w, h;
+	int32_t x, y, x2, y2;
+	uint32_t w, h, w2, h2;
 	if (top >= 4)
 	{
 		x = luaL_checkint(L, 1);
@@ -151,9 +151,10 @@ static int ScreenshotWithFormat(lua_State* L, ScreenshotFormat format)
 			unsigned int midx = w / 2;
 			x = midx + x;
 		}
-		if (y < 0) {
-			unsigned int midy = h / 2;
-			y = midy + y;
+        if (y < 0) {
+            unsigned int midy = h / 2;
+            y = midy + y;
+        }
 		if (x > 9000) {
 			unsigned int midx = w / 2;
 			x = midx - (x - 9000);
@@ -162,11 +163,12 @@ static int ScreenshotWithFormat(lua_State* L, ScreenshotFormat format)
 			unsigned int midy = h / 2;
 			y = midy - (y - 9000);
 		}
+        dmGraphics::GetViewport(g_GraphicsContext, &x2, &y2, &w2, &h2);
 		if (w == 0) {
-			w = viewport[2];
+			w = w2;
 		}
 		if (h == 0) {
-			h = viewport[3];
+			h = h2;
 		}
 	}
 	else
